@@ -1,0 +1,4 @@
+CQToolStrip
+===========
+
+Qt resizable toolbar
