@@ -5,3 +5,5 @@ moc_*.cpp
 bin/
 obj/
 lib/
+
+test/CQToolStripTest
