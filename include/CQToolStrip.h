@@ -39,15 +39,15 @@ class CQToolStrip : public QWidget {
 
   void updateLayout(bool updateSplitters);
 
-  QSize sizeHint() const;
-  QSize minimumSizeHint() const;
+  QSize sizeHint() const override;
+  QSize minimumSizeHint() const override;
 
  private:
   void expandToFit(int ind=-1, int fitW=-1);
 
-  void showEvent(QShowEvent *);
+  void showEvent(QShowEvent *) override;
 
-  void resizeEvent(QResizeEvent *);
+  void resizeEvent(QResizeEvent *) override;
 
   int contentsWidth() const;
 
@@ -115,11 +115,11 @@ class CQToolStripArea : public QWidget {
   void setClipped(bool clipped);
   bool isClipped() const;
 
-  QSize sizeHint() const;
-  QSize minimumSizeHint() const;
+  QSize sizeHint() const override;
+  QSize minimumSizeHint() const override;
 
  private:
-  void resizeEvent(QResizeEvent *);
+  void resizeEvent(QResizeEvent *) override;
 
  private:
   CQToolStrip   *strip_;
@@ -140,15 +140,15 @@ class CQToolStripSplitter : public QWidget {
 
   void init(int ind, Qt::Orientation orient);
 
-  void mousePressEvent  (QMouseEvent *e);
-  void mouseMoveEvent   (QMouseEvent *e);
-  void mouseReleaseEvent(QMouseEvent *e);
+  void mousePressEvent  (QMouseEvent *e) override;
+  void mouseMoveEvent   (QMouseEvent *e) override;
+  void mouseReleaseEvent(QMouseEvent *e) override;
 
-  void enterEvent(QEvent *e);
-  void leaveEvent(QEvent *e);
+  void enterEvent(QEvent *e) override;
+  void leaveEvent(QEvent *e) override;
 
  private:
-  void paintEvent(QPaintEvent *);
+  void paintEvent(QPaintEvent *) override;
 
  signals:
   void splitterMoved(int ind, int d);
@@ -177,7 +177,7 @@ class CQToolStripMenuButton : public QToolButton {
   CQToolStripMenuButton(CQToolStrip *strip);
 
  private:
-  void paintEvent(QPaintEvent *);
+  void paintEvent(QPaintEvent *) override;
 
  private:
   CQToolStrip *strip_;
@@ -214,13 +214,13 @@ class CQToolStripMenuContents : public QWidget {
   void removeAreas(QWidget *parent);
 
  private:
-  void showEvent(QShowEvent *);
-  void resizeEvent(QResizeEvent *);
+  void showEvent(QShowEvent *) override;
+  void resizeEvent(QResizeEvent *) override;
 
   void updateLayout();
 
-  QSize sizeHint() const;
-  QSize minimumSizeHint() const;
+  QSize sizeHint() const override;
+  QSize minimumSizeHint() const override;
 
  private:
   typedef std::vector<CQToolStripArea *> Areas;
