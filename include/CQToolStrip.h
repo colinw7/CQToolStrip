@@ -33,9 +33,9 @@ class CQToolStrip : public QWidget {
 
   int labelHeight() const { return labelHeight_; }
 
-  int numAreas() const { return areas_.size(); }
+  int numAreas() const { return int(areas_.size()); }
 
-  CQToolStripArea *getArea(int i) { return areas_[i]; }
+  CQToolStripArea *getArea(int i) { return areas_[uint(i)]; }
 
   void updateLayout(bool updateSplitters);
 

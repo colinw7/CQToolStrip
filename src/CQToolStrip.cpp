@@ -85,10 +85,10 @@ updateLayout(bool updateSplitters)
   if (updateSplitters) {
     menuButton_->hide();
 
-    int n = areas_.size();
+    auto n = areas_.size();
 
-    for (int i = 0; i < n; ++i) {
-      CQToolStripArea *area = areas_[i];
+    for (uint i = 0; i < n; ++i) {
+      auto *area = areas_[i];
 
       area->setVisible(true);
     }
@@ -104,8 +104,8 @@ updateLayout(bool updateSplitters)
     // place areas
     int x = 2;
 
-    for (int i = 0; i < n; ++i) {
-      CQToolStripArea *area = areas_[i];
+    for (uint i = 0; i < n; ++i) {
+      auto *area = areas_[i];
 
       //if (! area->isVisible()) continue;
 
@@ -121,7 +121,7 @@ updateLayout(bool updateSplitters)
       if (area->isResizable() && i < n - 1) {
         CQToolStripSplitter *splitter = getSplitter();
 
-        splitter->init(i, Qt::Vertical);
+        splitter->init(int(i), Qt::Vertical);
 
         splitter->move  (x - 1, 0);
         splitter->resize(4, height());
@@ -151,10 +151,10 @@ updateLayout(bool updateSplitters)
     // place areas
     int x = 2;
 
-    int n = areas_.size();
+    auto n = areas_.size();
 
-    for (int i = 0; i < n; ++i) {
-      CQToolStripArea *area = areas_[i];
+    for (uint i = 0; i < n; ++i) {
+      auto *area = areas_[i];
 
       //if (! area->isVisible()) continue;
 
@@ -166,7 +166,7 @@ updateLayout(bool updateSplitters)
       x += w + 2;
 
       if (area->isResizable() && i < n - 1) {
-        CQToolStripSplitter *splitter = splitters_[spliiterNum++];
+        auto *splitter = splitters_[uint(spliiterNum++)];
 
         disconnect(splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)));
 
@@ -184,12 +184,12 @@ void
 CQToolStrip::
 updateLabelHeight()
 {
-  int n = areas_.size();
+  auto n = areas_.size();
 
   // determine label height
   labelHeight_ = 0;
 
-  for (int i = 0; i < n; ++i) {
+  for (uint i = 0; i < n; ++i) {
     CQToolStripArea *area = areas_[i];
 
     //if (! area->isVisible()) continue;
@@ -207,9 +207,9 @@ contentsWidth() const
 {
   int w = 2;
 
-  int n = areas_.size();
+  auto n = areas_.size();
 
-  for (int i = 0; i < n; ++i) {
+  for (uint i = 0; i < n; ++i) {
     CQToolStripArea *area = areas_[i];
 
     int w1 = area->displayWidth();
@@ -229,13 +229,13 @@ getResizeInds() const
 {
   std::vector<int> inds;
 
-  int n = areas_.size();
+  auto n = areas_.size();
 
-  for (int i = 0; i < n; ++i) {
+  for (uint i = 0; i < n; ++i) {
     CQToolStripArea *area = areas_[i];
 
     if (area->isResizable() && i < n - 1)
-      inds.push_back(i);
+      inds.push_back(int(i));
   }
 
   return inds;
@@ -257,7 +257,7 @@ reduceSize()
 
     inds.pop_back();
 
-    CQToolStripArea *area = areas_[ind];
+    auto *area = areas_[uint(ind)];
 
     int curW = area->displayWidth();
     int minW = area->minimumSizeHint().width();
@@ -284,17 +284,17 @@ updateVisible()
 
   int x = 2;
 
-  int n = areas_.size();
+  auto n = areas_.size();
 
-  for (int i = 0; i < n; ++i) {
-    CQToolStripArea *area = areas_[i];
+  for (uint i = 0; i < n; ++i) {
+    auto *area = areas_[i];
 
     int w = area->displayWidth();
 
     if (visible) {
       if (x + w + 2 > width()) {
         visible = false;
-        visInd  = i;
+        visInd  = int(i);
       }
     }
 
@@ -316,7 +316,7 @@ updateVisible()
   int bw = menuButton_->width();
 
   for (int i = 0; i < visInd; ++i) {
-    CQToolStripArea *area = areas_[i];
+    auto *area = areas_[uint(i)];
 
     int w = area->displayWidth();
 
@@ -330,7 +330,7 @@ updateVisible()
 
     x += w + 2;
 
-    if (area->isResizable() && i < n - 1)
+    if (area->isResizable() && i < int(n - 1))
       x += 4;
   }
 }
@@ -340,7 +340,7 @@ CQToolStrip::
 hideSplitters()
 {
   for (int i = 0; i < splitterPos_; ++i)
-    splitters_[i]->hide();
+    splitters_[uint(i)]->hide();
 
   splitterPos_ = 0;
 }
@@ -352,7 +352,7 @@ getSplitter()
   while (splitterPos_ >= int(splitters_.size()))
     splitters_.push_back(new CQToolStripSplitter(this));
 
-  CQToolStripSplitter *splitter = splitters_[splitterPos_++];
+  auto *splitter = splitters_[uint(splitterPos_++)];
 
   return splitter;
 }
@@ -363,7 +363,7 @@ splitterMoved(int ind, int d)
 {
   int fitW = contentsWidth();
 
-  CQToolStripArea *area = areas_[ind];
+  auto *area = areas_[uint(ind)];
 
   int min_area_width = area->minimumSizeHint().width();
   int max_area_width = width() - minimumSizeHint().width();
@@ -383,10 +383,10 @@ splitterMoved(int ind, int d)
 
     if (dw > 0) {
 //std::cerr << "shrink others " << dw << std::endl;
-      int n = areas_.size();
+      auto n = areas_.size();
 
-      for (int i = ind + 1; i < n - 1; ++i) {
-        CQToolStripArea *area1 = areas_[i];
+      for (int i = ind + 1; i < int(n - 1); ++i) {
+        auto *area1 = areas_[uint(i)];
 
         //if (! area1->isVisible()) continue;
 
@@ -445,12 +445,12 @@ expandToFit(int stopInd, int fitW)
     fitW = contentsWidth();
 //std::cerr << "Expand to fit " << fitW << std::endl;
 
-  int n = areas_.size();
+  auto n = areas_.size();
 
-  for (int i = n - 2; i >= 0; --i) {
+  for (int i = int(n - 2); i >= 0; --i) {
     if (i == stopInd) break;
 
-    CQToolStripArea *area1 = areas_[i];
+    auto *area1 = areas_[uint(i)];
 
     //if (! area1->isVisible()) continue;
 
@@ -476,9 +476,9 @@ sizeHint() const
 {
   int w = 2, h = 0;
 
-  int n = areas_.size();
+  auto n = areas_.size();
 
-  for (int i = 0; i < n; ++i) {
+  for (uint i = 0; i < n; ++i) {
     CQToolStripArea *area = areas_[i];
 
     w += area->minimumSizeHint().width() + 2;
@@ -498,9 +498,9 @@ minimumSizeHint() const
 {
   int h = 0;
 
-  int n = areas_.size();
+  auto n = areas_.size();
 
-  for (int i = 0; i < n; ++i) {
+  for (uint i = 0; i < n; ++i) {
     CQToolStripArea *area = areas_[i];
 
     h = std::max(h, area->minimumSizeHint().height());
