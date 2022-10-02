@@ -128,7 +128,7 @@ updateLayout(bool updateSplitters)
 
         splitter->show();
 
-        connect(splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)));
+        connect(splitter, SIGNAL(splitterMoved(int, int)), this, SLOT(splitterMoved(int, int)));
 
         x += 4; // splitter width
       }
@@ -168,11 +168,11 @@ updateLayout(bool updateSplitters)
       if (area->isResizable() && i < n - 1) {
         auto *splitter = splitters_[uint(spliiterNum++)];
 
-        disconnect(splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)));
+        disconnect(splitter, SIGNAL(splitterMoved(int, int)), this, SLOT(splitterMoved(int, int)));
 
         splitter->move(x - 1, 0);
 
-        connect(splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)));
+        connect(splitter, SIGNAL(splitterMoved(int, int)), this, SLOT(splitterMoved(int, int)));
 
         x += 4; // splitter width
       }
